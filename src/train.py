@@ -59,7 +59,7 @@ def main():
             mlflow.log_metric("r2", r2_score(y_test, preds))
             mlflow.log_metric("rmse", float(np.sqrt(mean_squared_error(y_test, preds))))
 
-        mlflow.sklearn.log_model(model, "model", registered_model_name=registered_name)
+        mlflow.sklearn.log_model(model, name="model", registered_model_name=registered_name, skops_trusted_types=["sklearn.tree._tree.Tree"])
 
     client = MlflowClient()
     versions = client.search_model_versions(f"name='{registered_name}'")
